@@ -3,6 +3,8 @@
 import socket
 import struct
 import pwn
+import json
+import os
     
 class Sniffer():
     ethproto = {0x0806: 'ARP', 0x0800: 'IPv4', 0x86dd: 'IPv6'}
@@ -40,9 +42,24 @@ class Sniffer():
                 data = data[20:]
                 
                 #If we get an HTTP packet
-                if src_port == 80 or dest_port == 80 and len(data) > 0:
+                if (src_port == 80 or dest_port == 80) and len(data) > 0:
                     print("HTTP!!!")
-                    print(data)
+                    if dest_port == 80:
+                        print(f"Website: {self.dns_lookup(dest_ip)}")
+                    else:
+                        print(f"Website: {self.dns_lookup(src_ip)}")
+                
+                #If we get HTTPS
+                elif (src_port == 443 or dest_port == 443) and len(data) > 0:
+                    print("HTTPS!!!")
+                    if dest_port == 443:
+                        print(f"Website: {self.dns_lookup(dest_ip)}")
+                    else:
+                        print(f"Website: {self.dns_lookup(src_ip)}")
+    
+    def dns_lookup(self, ip):
+        data = os.popen(f"dig +noall +answer -x {ip}", "r").read()
+        return data.split(" ")[-1].split("\t")[-1].replace("\n", "")
                 
 if __name__ == "__main__":
     packet = Sniffer()
