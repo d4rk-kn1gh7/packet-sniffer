@@ -1,0 +1,5 @@
+argparse
+logging
+pwntools
+requests
+flask
