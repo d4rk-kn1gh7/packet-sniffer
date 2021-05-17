@@ -32,7 +32,7 @@ class NetworkCapture():
 
             logging.info(f'Protocol: {self.netproto[proto]}, Source IP: {src_ip}, Destination IP: {dest_ip}')
             data = data[20:]
-            
+
             #Only TCP
             if self.netproto[proto] == 'TCP':
                 src_port = pwn.u16(data[:2], endian = 'big')
@@ -52,7 +52,7 @@ class NetworkCapture():
                         website = self.dns_lookup(src_ip)
                     logging.info(f"Website: {website}")
                     self.finalData['website'] = website
-                
+
                 #If we get HTTPS
                 elif (src_port == 443 or dest_port == 443) and len(data) > 0:
                     logging.info("HTTPS!!!")
@@ -63,8 +63,8 @@ class NetworkCapture():
                     logging.info(f"Website: {website}")
                     self.finalData['website'] = website
 
-            return self.finalData
-    
+        return self.finalData
+        
     def dns_lookup(self, ip):
         data = os.popen(f"dig +noall +answer -x {ip}", "r").read()
         return data.split(" ")[-1].split("\t")[-1].replace("\n", "")
@@ -75,28 +75,31 @@ class Client():
         self.server = server
         self.device = device
         self.interface = interface
-        
+
     def exec(self):
         sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
         if self.interface is not None:
             sock.bind((self.interface, 0))
         self.capture(sock)
-
+        
     def capture(self, sock):
         while True:
             data = sock.recv(65565)
             net_cap = NetworkCapture()
             output = net_cap.getTCPdata(data)
             self.send2server(output)
-        
+            
     def send2server(self, output):
         url = f"http://{self.server}:8000/capturer"
         output['device_name'] = self.device
         output['confirm'] = "success"
-        r = requests.post(url, output)
-        if "Data received!" in r.text:
-            logging.success("Sent data!")
-        else:
+        try:
+            r = requests.post(url, output)
+            if "Data received!" in r.text:
+                logging.success("Sent data!")
+            else:
+                logging.error("Unable to send data!")
+        except:
             logging.error("Unable to send data!")
 
 if __name__ == "__main__":
