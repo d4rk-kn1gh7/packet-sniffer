@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Display</title>
+  <meta name="description" content="Displays results">
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+<body>
+    <table>
+        {% for item in items %}
+        <tr>
+           <td class="c1"></td>
+           <td class="c2">{{item.date}}</td>
+           <td class="c3">{{item.id}}</td>
+           <td class="c4"><SPAN>{{item.position}}</SPAN></td>
+           <td class="c5"><SPAN>{{item.status}}</SPAN></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>

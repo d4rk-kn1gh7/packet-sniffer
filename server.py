@@ -13,8 +13,8 @@ def capture():
     try:
         if data['confirm'] == 'success':
             #Do something with the data here
-            return "Data received!"
+            return render_template("capturer.html, success=True", data=data, errorMsg=None)
         else:
-            return "Something went wrong!"
+            return render_template("capturer.html, success=False", data=data, errorMsg="")
     except:
-        return "Something went wrong!"
+        return render_template("capturer.html, success=Falsee", data=data, errorMsg="")
