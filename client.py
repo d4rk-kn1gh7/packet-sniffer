@@ -90,23 +90,24 @@ class Client():
             self.send2server(output)
             
     def send2server(self, output):
-        url = f"http://{self.server}:8000/capturer"
+        url = f"http://{self.server}:9000/capturer"
         output['device_name'] = self.device
         output['confirm'] = "success"
         try:
             r = requests.post(url, output)
-            if "Data received!" in r.text:
-                logging.success("Sent data!")
+            print(r.text)
+            if "Data Received!" in r.text:
+                logging.info("Sent data!")
             else:
-                logging.error("Unable to send data!")
-        except:
-            logging.error("Unable to send data!")
+                logging.error("Unable to send data!!!")
+        except Exception as e:
+            logging.error(e)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Packer Sniffer - Client")
     parser.add_argument("-s", "--server", help = "Server IP", required = True)
     parser.add_argument("-i", "--interface", help = "Interface", required = False, default = None)
-    parser.add_argument("-d", "--device", help = "Device name", required = False, default = "Unknown")
+    parser.add_argument("-d", "--device", help = "Device name", required = False, default = os.uname()[1])
 
     args = parser.parse_args()
 
