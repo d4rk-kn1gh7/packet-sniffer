@@ -1,5 +1,5 @@
 argparse
-logging
 pwntools
 requests
 flask
+flask_pymongo
