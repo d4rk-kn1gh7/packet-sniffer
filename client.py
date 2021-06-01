@@ -95,13 +95,12 @@ class Client():
         output['confirm'] = "success"
         try:
             r = requests.post(url, output)
-            print(r.text)
             if "Data Received!" in r.text:
                 logging.info("Sent data!")
             else:
                 logging.error("Unable to send data!!!")
-        except Exception as e:
-            logging.error(e)
+        except:
+            logging.error("Unable to send data!!!")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Packer Sniffer - Client")
