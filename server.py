@@ -1,4 +1,9 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, json, jsonify
+from flask_pymongo import PyMongo
+
+app = Flask(__name__)
+app.config["MONGO_URI"] = "mongodb://localhost:27017/sniffer_data"
+mongo = PyMongo(app)
 
 app = Flask(__name__)
 
@@ -9,12 +14,17 @@ def home():
 @app.route('/capturer', methods = ['POST'])
 def capture():
     remote_ip = request.remote_addr
-    data = request.form
+    data = request.form.to_dict()
+    print(data)
     try:
-        if data['confirm'] == 'success':
-            #Do something with the data here
-            return render_template("capturer.html, success=True", data=data, errorMsg=None)
+        if request.form['confirm'] == 'success':
+            mongo.db.request_data.insert_one(data)
+            return "Data Received!"
         else:
-            return render_template("capturer.html, success=False", data=data, errorMsg="")
+            return "No Data :P"
     except:
-        return render_template("capturer.html, success=Falsee", data=data, errorMsg="")
+        return "No Data :p"
+
+@app.route('/display')
+def display():
+    return "i'll do this later"
