@@ -155,6 +155,10 @@ body {
 	background-color: var(--sidebar-bg-color);
 }
 
+div.scrollmenu {
+	overflow: auto;
+	white-space: nowrap;
+}
 
 /** --------------------------------
  -- welcome

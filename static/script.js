@@ -74,7 +74,3 @@ $('.sidebar .categories').addEventListener('click', function (event) {
 	}
 })
 
-$('.sidebar .close-aside').addEventListener('click', function () {
-	$(`#${this.dataset.close}`).classList.add('show-sidebar')
-	wrapper.classList.remove('margin')
-})
