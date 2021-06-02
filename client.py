@@ -18,7 +18,7 @@ class NetworkCapture():
     def getTCPdata(self, data):
         proto = pwn.u16(data[12:14], endian = 'big')
         self.finalData['ethproto'] = self.ethproto[proto]
-        logging.info(f'Ethernet protocol: {self.ethproto[proto]}')
+        #logging.info(f'Ethernet protocol: {self.ethproto[proto]}')
         data = data[14:]
 
         #Only ipv4 packets
@@ -30,7 +30,7 @@ class NetworkCapture():
             self.finalData['src_ip'] = src_ip
             self.finalData['dest_ip'] = dest_ip
 
-            logging.info(f'Protocol: {self.netproto[proto]}, Source IP: {src_ip}, Destination IP: {dest_ip}')
+            #logging.info(f'Protocol: {self.netproto[proto]}, Source IP: {src_ip}, Destination IP: {dest_ip}')
             data = data[20:]
 
             #Only TCP
@@ -40,7 +40,7 @@ class NetworkCapture():
 
                 self.finalData['src_port'] = src_port
                 self.finalData['dest_port'] = dest_port
-                logging.info(f'Source Port: {src_port}, Destination Port: {dest_port}')
+                #logging.info(f'Source Port: {src_port}, Destination Port: {dest_port}')
                 data = data[20:]
                 
                 #If we get an HTTP packet
@@ -90,17 +90,17 @@ class Client():
             self.send2server(output)
             
     def send2server(self, output):
-        url = f"http://{self.server}:9000/capturer"
+        url = f"http://{self.server}:7000/capturer"
         output['device_name'] = self.device
         output['confirm'] = "success"
         try:
             r = requests.post(url, output)
-            if "Data Received!" in r.text:
-                logging.info("Sent data!")
-            else:
-                logging.error("Unable to send data!!!")
-        except:
-            logging.error("Unable to send data!!!")
+            #if "Data Received!" in r.text:
+                #logging.info("Sent data!")
+            #else:
+                #logging.error("Unable to send data!!!")
+        except Exception as e:
+            logging.error(e)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Packer Sniffer - Client")

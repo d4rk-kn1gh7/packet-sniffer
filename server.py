@@ -9,22 +9,32 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    return ("Visit the Dashboard for more info (/dashboard)")
 
 @app.route('/capturer', methods = ['POST'])
 def capture():
     remote_ip = request.remote_addr
     data = request.form.to_dict()
-    print(data)
     try:
         if request.form['confirm'] == 'success':
-            mongo.db.request_data.insert_one(data)
+            if "website" in data:
+                mongo.db.website_data.insert_one(data)
+            mongo.db.tcpdump_data.insert_one(data)
             return "Data Received!"
         else:
             return "No Data :P"
-    except:
-        return "No Data :p"
+    except Exception as e:
+        return e
 
-@app.route('/display')
-def display():
-    return "i'll do this later"
+@app.route('/dashboard', methods=['POST', 'GET'])
+def display_dashboard():
+    update=False
+    device_name=""
+    if (request.method == 'POST'):
+        device_name=request.form['device-select']
+        update=True
+    return render_template("dashboard.html", website_data=mongo.db.website_data, update=update, device_name=device_name)
+
+@app.route('/datadump')
+def display_datadump():
+    return render_template("datadump.html")
