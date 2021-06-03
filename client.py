@@ -81,7 +81,8 @@ class NetworkCapture():
         with open(websites, "r") as f:
             for line in f.readlines():
                 data = line.strip("\n")
-                self.website_maps[os.popen(f"dig {data} +short", "r").read().strip("\n")] = data
+                for ip in os.popen(f"dig {data} +short", "r").read().split("\n"):
+                    self.website_maps[ip] = data
 
 class Client():
 
