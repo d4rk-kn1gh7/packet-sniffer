@@ -6,6 +6,7 @@ import os
 import logging
 import argparse
 import requests
+import time
 
 class NetworkCapture():
 
@@ -43,25 +44,24 @@ class NetworkCapture():
                 #logging.info(f'Source Port: {src_port}, Destination Port: {dest_port}')
                 data = data[20:]
                 
-                #If we get an HTTP packet
-                if (src_port == 80 or dest_port == 80) and len(data) > 0:
+                #If we get an HTTP/HTTPS packet
+                if (
+                    src_port == 80 or dest_port == 80 
+                    or src_port == 443 or dest_port == 443
+                ) and len(data) > 0:
                     logging.info("HTTP!!!")
-                    if dest_port == 80:
+                    if dest_port == 80 or dest_port == 443:
                         website = self.dns_lookup(dest_ip)
                     else:
                         website = self.dns_lookup(src_ip)
-                    logging.info(f"Website: {website}")
-                    self.finalData['website'] = website
-
-                #If we get HTTPS
-                elif (src_port == 443 or dest_port == 443) and len(data) > 0:
-                    logging.info("HTTPS!!!")
-                    if dest_port == 443:
-                        website = self.dns_lookup(dest_ip)
-                    else:
-                        website = self.dns_lookup(src_ip)
-                    logging.info(f"Website: {website}")
-                    self.finalData['website'] = website
+                    if "." in website:
+                        logging.info(f'Protocol: {self.netproto[proto]}, Source IP: {src_ip}, Destination IP: {dest_ip}')
+                        logging.info(f'Source Port: {src_port}, Destination Port: {dest_port}')
+                        logging.info(f"Website: {website}")
+                        curr_time = time.localtime(time.time())
+                        self.finalData['date'] = f"{curr_time[2]}/{curr_time[1]}/{curr_time[0]}"
+                        self.finalData['time'] = f"{curr_time[3]}:{curr_time[4]}:{curr_time[5]}"
+                        self.finalData['website'] = website
 
         return self.finalData
         
@@ -71,8 +71,9 @@ class NetworkCapture():
 
 class Client():
 
-    def __init__(self, server, device, interface):
+    def __init__(self, server, port, device, interface):
         self.server = server
+        self.port = int(port)
         self.device = device
         self.interface = interface
 
@@ -90,7 +91,7 @@ class Client():
             self.send2server(output)
             
     def send2server(self, output):
-        url = f"http://{self.server}:7000/capturer"
+        url = f"http://{self.server}:{self.port}/capturer"
         output['device_name'] = self.device
         output['confirm'] = "success"
         try:
@@ -105,6 +106,7 @@ class Client():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Packer Sniffer - Client")
     parser.add_argument("-s", "--server", help = "Server IP", required = True)
+    parser.add_argument("-p", "--port", help = "Server port", required = False, default = 8000)
     parser.add_argument("-i", "--interface", help = "Interface", required = False, default = None)
     parser.add_argument("-d", "--device", help = "Device name", required = False, default = os.uname()[1])
 
@@ -113,7 +115,7 @@ if __name__ == "__main__":
     logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
 
     try:
-        c = Client(server = args.server, device = args.device, interface = args.interface)
+        c = Client(server = args.server, port = args.port, device = args.device, interface = args.interface)
         c.exec()
 
     except Exception as e:
