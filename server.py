@@ -46,9 +46,18 @@ def display_dashboard():
                             values=values,
                             max=max_val)
 
-@app.route('/datadump')
+@app.route('/datadump', methods=['POST', 'GET'])
 def display_datadump():
-    return render_template("datadump.html")
+    update=False
+    device_name=""
+    if (request.method == 'POST'):
+        device_name=request.form['device-select']
+        update=True
+    return render_template("datadump.html",
+                            tcpdump_data=mongo.db.tcpdump_data,
+                            update=update,
+                            device_name=device_name
+                            )
 
 def get_chart_val(website_data, device_name):
     labels=website_data.distinct("website", {"device_name":device_name})
