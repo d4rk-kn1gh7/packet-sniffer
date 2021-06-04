@@ -3,13 +3,11 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Sniffer Dashboard</title>
+  <title>Packet Sniffer View</title>
   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css'>
   <link rel='stylesheet' href='https://unicons.iconscout.com/release/v3.0.6/css/line.css'>
   <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
-  <link rel="stylesheet" href="{{url_for('static', filename='table.scss')}}">
-  <!link rel='stylesheet' href='https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css'>
-  <!link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.24/r-2.2.7/datatables.min.css"/>
+  <link rel='stylesheet' href='https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css'>
 </head>
 
 <body>
@@ -31,7 +29,7 @@
         <i class="uil-chart-pie-alt"></i><a href="{{ url_for('display_dashboard') }}" onclick=window.location.replace("{{ url_for('display_dashboard') }}")>Website Monitoring</a>
       </li>
       <li>
-        <i class="uil-folder"></i><a href="{{ url_for('display_datadump') }}" onclick=window.location.replace("{{ url_for('display_datadump') }}")>Packet Sniffer Dump</a>
+        <i class="uil-folder"></i><a href="{{ url_for('display_datadump') }}" onclick=window.location.replace("{{ url_for('display_datadump') }}")>Packet Sniffer View</a>
       </li class="">
     </ul>
   </aside>

@@ -383,3 +383,29 @@ div.scrollmenu {
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+tr {
+  background-color: var(--sidebar-bg-color);
+  color: var(--dk-gray-200);
+}
+td {
+  background-color: var(--sidebar-bg-color);
+}
+
+#data_table_info {
+  color: var(--dk-gray-300);
+}
+
+a.paginate_button {
+  background-color: var(--sidebar-bg-color);
+  color: var(--dk-gray-100) !important;
+}
+
+label[data-children-count="1"] {
+  color: var(--dk-gray-100);
+}
+
+#data_table_previous {
+  background-color: var(--sidebar-bg-color);
+  color: white;
+}
