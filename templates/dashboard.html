@@ -25,10 +25,10 @@
 
     <ul class="categories list-unstyled">
       <li class="">
-        <i class="uil-chart-pie-alt"></i><a href="{{ url_for('display_dashboard') }}">Website Monitoring</a>
+        <i class="uil-chart-pie-alt"></i><a href="{{ url_for('display_dashboard') }}" onclick=window.location.replace("{{ url_for('display_dashboard') }}")>Website Monitoring</a>
       </li>
       <li>
-        <i class="uil-folder"></i><a href="{{ url_for('display_datadump') }}">Packet Sniffer Dump</a>
+        <i class="uil-folder"></i><a href="{{ url_for('display_datadump') }}" onclick=window.location.replace("{{ url_for('display_datadump') }}")>Packet Sniffer Dump</a>
       </li class="">
     </ul>
   </aside>

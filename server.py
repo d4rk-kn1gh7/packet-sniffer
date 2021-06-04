@@ -5,11 +5,9 @@ app = Flask(__name__)
 app.config["MONGO_URI"] = "mongodb://localhost:27017/sniffer_data"
 mongo = PyMongo(app)
 
-app = Flask(__name__)
-
 @app.route('/')
 def home():
-    return ("Visit the Dashboard for more info (/dashboard)")
+    return render_template("index.html")
 
 @app.route('/capturer', methods = ['POST'])
 def capture():
