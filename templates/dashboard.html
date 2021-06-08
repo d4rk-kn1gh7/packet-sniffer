@@ -132,9 +132,40 @@
       <section class="charts mt-4">
         <div class="row">
           <div class="col-lg-6">
-            <div class="chart-container rounded-2 p-3 overflow: scroll">
-              <h3 class="fs-6 mb-3">List of websites accessed</h3>
+            <div class="chart-container rounded-2 p-3">
+              <h3 class="fs-6 mb-3">Educational sites that were visited by the user</h3>
               {% if update == True %}
+              <canvas id="pie-chart" height="200">
+
+              </canvas>
+              {% else %}
+              <h6 style="color: beige;">
+                No Device Selected
+              </h6>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="chart-container rounded-2 p-3">
+              <h3 class="fs-6 mb-3">Number of times visited</h3>
+              {% if update == True %}
+              <canvas id="bar_chart" height="200">
+
+              </canvas>
+              {% else %}
+              <h6 style="color: beige;">
+                No Device Selected
+              </h6>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="charts mt-4">
+        <div class="chart-container p-3">
+              <h3 class="fs-6 mb-3">List of websites accessed</h3>
+        {% if update == True %}
               <div class="scrollmenu">
                 <table class="table table-dark">
                   <thead>
@@ -162,23 +193,8 @@
                 No Device Selected
               </h6>
               {% endif %}
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="chart-container rounded-2 p-3">
-              <h3 class="fs-6 mb-3">Number of times visited</h3>
-              {% if update == True %}
-              <canvas id="bar_chart">
-
-              </canvas>
-              {% else %}
-              <h6 style="color: beige;">
-                No Device Selected
-              </h6>
-              {% endif %}
-            </div>
-          </div>
-        </div>
+          
+      </div>
       </section>
     </div>
   </section>
@@ -194,13 +210,13 @@
       type: 'bar',
       data: {
         labels: [
-        {% for item in labels %}
+        {% for item in bar_labels %}
         "{{ item }}",
         {% endfor %}
         ],
         datasets: [{
           data: [
-            {% for item in values %}
+            {% for item in bar_values %}
             "{{ item }}",
             {% endfor %}
             ],
@@ -209,6 +225,27 @@
       },
       options: {
       legend: { display: false },
+    }
+    });
+
+  </script>
+  <script>
+    var ctx = document.getElementById("pie-chart").getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: labels=["Educational", "Not Educational"],
+        datasets: [{
+          data: [
+            {% for item in pie_values %}
+            "{{ item }}",
+            {% endfor %}
+            ],
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+        }]
+      },
+      options: {
+      legend: { display: true },
     }
     });
 
