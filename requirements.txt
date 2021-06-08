@@ -3,3 +3,4 @@ pwntools
 requests
 flask
 flask_pymongo
+tqdm

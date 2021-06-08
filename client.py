@@ -7,16 +7,15 @@ import logging
 import argparse
 import requests
 import time
+from tqdm import tqdm
 
 class NetworkCapture():
 
     ethproto = {0x0806: 'ARP', 0x0800: 'IPv4', 0x86dd: 'IPv6'}
     netproto = {1: "ICMP", 17: "UDP", 6: "TCP"}
-    website_maps = dict()
 
-    def __init__(self, websites):
+    def __init__(self):
         self.finalData = dict()
-        self.parse_websites(websites)
 
     def getTCPdata(self, data):
         proto = pwn.u16(data[12:14], endian = 'big')
@@ -76,15 +75,10 @@ class NetworkCapture():
     def dns_lookup(self, ip):
         data = os.popen(f"dig -x {ip} +short", "r").read()
         return data.strip().strip(".")
-    
-    def parse_websites(self, websites):
-        with open(websites, "r") as f:
-            for line in f.readlines():
-                data = line.strip("\n")
-                for ip in os.popen(f"dig {data} +short", "r").read().split("\n"):
-                    self.website_maps[ip] = data
 
 class Client():
+
+    website_maps = dict()
 
     def __init__(self, server, port, device, interface, websites):
         self.server = server
@@ -97,12 +91,13 @@ class Client():
         sock = socket.socket(socket.PF_PACKET, socket.SOCK_RAW, socket.ntohs(0x0003))
         if self.interface is not None:
             sock.bind((self.interface, 0))
+        self.parse_websites(self.websites)
         self.capture(sock)
         
     def capture(self, sock):
         while True:
             data = sock.recv(65565)
-            net_cap = NetworkCapture(self.websites)
+            net_cap = NetworkCapture()
             output = net_cap.getTCPdata(data)
             self.send2server(output)
             
@@ -112,12 +107,19 @@ class Client():
         output['confirm'] = "success"
         try:
             r = requests.post(url, output)
-            #if "Data Received!" in r.text:
-                #logging.info("Sent data!")
-            #else:
-                #logging.error("Unable to send data!!!")
+            if "Data Received!" in r.text:
+                logging.info("Sent data!")
+            else:
+                logging.error("Unable to send data!!!")
         except Exception as e:
             logging.error(e)
+    
+    def parse_websites(self, websites):
+        with open(websites, "r") as f:
+            for line in tqdm(f.readlines(), desc = "Initializing websites"):
+                data = line.strip("\n")
+                for ip in os.popen(f"dig {data} +short", "r").read().split("\n"):
+                    self.website_maps[ip] = data
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Packer Sniffer - Client")
