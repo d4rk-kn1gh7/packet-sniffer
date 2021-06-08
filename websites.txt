@@ -17,3 +17,11 @@ en.wikipedia.org
 www.netflix.com/in
 in.pinterest.com
 www.instagram.com
+www.twitch.tv
+www.twitter.com
+zoom.us
+www.ebay.com
+www.reddit.com
+www.bing.com
+www.linkedin.com
+www.msn.com
