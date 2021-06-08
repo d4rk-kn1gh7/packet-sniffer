@@ -14,8 +14,9 @@ class NetworkCapture():
     ethproto = {0x0806: 'ARP', 0x0800: 'IPv4', 0x86dd: 'IPv6'}
     netproto = {1: "ICMP", 17: "UDP", 6: "TCP"}
 
-    def __init__(self):
+    def __init__(self, website_maps):
         self.finalData = dict()
+        self.website_maps = website_maps
 
     def getTCPdata(self, data):
         proto = pwn.u16(data[12:14], endian = 'big')
@@ -97,7 +98,7 @@ class Client():
     def capture(self, sock):
         while True:
             data = sock.recv(65565)
-            net_cap = NetworkCapture()
+            net_cap = NetworkCapture(self.website_maps)
             output = net_cap.getTCPdata(data)
             self.send2server(output)
             
