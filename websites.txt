@@ -2,7 +2,6 @@ www.google.com
 www.youtube.com
 www.gmail.com
 www.outlook.com
-www.google.com
 www.meritnation.com
 www.stackoverflow.com
 www.khanacademy.org
@@ -26,7 +25,6 @@ www.bing.com
 www.linkedin.com
 www.msn.com
 youtube.com
-www.google.com
 apple.com
 microsoft.com
 cloudflare.com
@@ -61,10 +59,8 @@ bbc.co.uk
 cnn.com
 feedburner.com
 nih.gov
-google.de
 whatsapp.com
 jimdofree.com
-google.com.br
 w3.org
 issuu.com
 policies.google.com
@@ -84,7 +80,6 @@ myspace.com
 reuters.com
 www.weebly.com
 medium.com
-google.co.jp
 msn.com
 fr.wikipedia.org
 opera.com
@@ -92,7 +87,6 @@ mail.ru
 theguardian.com
 www.yahoo.com
 gstatic.com
-google.es
 paypal.com
 dailymotion.com
 nytimes.com
@@ -128,7 +122,6 @@ buydomains.com
 huffpost.com
 fb.com
 independent.co.uk
-google.ru
 telegram.me
 samsung.com
 nasa.gov
@@ -151,7 +144,6 @@ un.org
 mediafire.com
 ig.com.br
 ebay.com
-google.pl
 picasaweb.google.com
 files.wordpress.com
 terra.com.br
@@ -163,7 +155,6 @@ lefigaro.fr
 usatoday.com
 webmd.com
 scribd.com
-google.it
 wsj.com
 abcnews.go.com
 translate.google.com
@@ -172,7 +163,6 @@ youronlinechoices.com
 cnet.com
 office.com
 networkadvertising.org
-google.co.uk
 gravatar.com
 dan.com
 cpanel.net
@@ -188,7 +178,6 @@ telegraph.co.uk
 archive.org
 dailymail.co.uk
 plesk.com
-google.fr
 trustpilot.com
 biglobe.ne.jp
 hollywoodreporter.com
@@ -270,7 +259,6 @@ kickstarter.com
 columbia.edu
 engadget.com
 twitch.tv
-google.nl
 unesco.org
 my.yahoo.com
 fda.gov
@@ -351,8 +339,6 @@ ted.com
 bing.com
 ikea.com
 list-manage.com
-google.com.tw
-google.co.in
 ea.com
 cambridge.org
 allaboutcookies.org
@@ -386,7 +372,6 @@ www.over-blog.com
 abc.es
 asus.com
 yadi.sk
-google.ca
 shutterstock.com
 iubenda.com
 howstuffworks.com
