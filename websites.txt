@@ -10,3 +10,10 @@ www.geeksforgeeks.org
 www.chegg.com
 www.leetcode.com
 www.coursera.org
+www.amazon.in
+www.flipkart.com
+www.facebook.com
+en.wikipedia.org
+www.netflix.com/in
+in.pinterest.com
+www.instagram.com
