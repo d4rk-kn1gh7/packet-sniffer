@@ -78,5 +78,5 @@ def get_pie_chart_val(website_data, device_name):
         if ".edu" not in item:
             count+=1
     total_val=len(sites)
-    values=[total_val-count, total_val]
+    values=[total_val-count, count]
     return values
