@@ -10,6 +10,6 @@ Packet sniffing is a technique of intercepting each packet as it travels through
 - <a href="https://github.com/Anuttan">Anjith Prakash</a>
 - <a href="https://github.com/codevardhan">Harshavardhan M</a>
 - <a href="https://github.com/n-d-u">Nandakishor S</a>
-- <a href="https://github.com/sanjjayrj">Sanjay Raju/a>
+- <a href="https://github.com/sanjjayrj">Sanjay Raju</a>
 - <a href="https://github.com/sreeragkvivek">Sreerag K Vivek</a>
 - <a href="https://github.com/RioT007">Vivek Haridas</a>
