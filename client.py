@@ -7,6 +7,7 @@ import logging
 import argparse
 import requests
 import time
+from tqdm import tqdm
 
 class NetworkCapture():
 
@@ -116,7 +117,7 @@ class Client():
     
     def parse_websites(self, websites):
         with open(websites, "r") as f:
-            for line in f.readlines():
+            for line in tqdm(f.readlines(), desc = "Initializing websites"):
                 data = line.strip("\n")
                 for ip in os.popen(f"dig {data} +short", "r").read().split("\n"):
                     self.website_maps[ip] = data
