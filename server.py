@@ -28,21 +28,24 @@ def capture():
 def display_dashboard():
     update=False
     device_name=""
-    labels=""
-    values=""
-    max_val=""
+    bar_labels=""
+    bar_values=""
+    pie_values=""
+    pie_labels=""
     if (request.method == 'POST'):
         device_name=request.form['device-select']
         update=True
-        labels, values= get_chart_val(mongo.db.website_data, device_name)
-        max_val=max(values)
+        bar_labels, bar_values= get_bar_chart_val(mongo.db.website_data, device_name)
+        pie_values= get_pie_chart_val(mongo.db.website_data, device_name)
+        #print(bar_labels)
+        #print(bar_values)
     return render_template("dashboard.html", 
                             website_data=mongo.db.website_data,
                             update=update,
                             device_name=device_name,
-                            labels=labels,
-                            values=values,
-                            max=max_val)
+                            bar_labels=bar_labels,
+                            bar_values=bar_values,
+                            pie_values=pie_values,)
 
 @app.route('/datadump', methods=['POST', 'GET'])
 def display_datadump():
@@ -57,7 +60,7 @@ def display_datadump():
                             device_name=device_name
                             )
 
-def get_chart_val(website_data, device_name):
+def get_bar_chart_val(website_data, device_name):
     labels=website_data.distinct("website", {"device_name":device_name})
     if "" in labels:
         labels.remove("")
@@ -65,3 +68,15 @@ def get_chart_val(website_data, device_name):
     for data in labels:
         values.append(website_data.find({"website":data}).count())
     return labels, values
+
+def get_pie_chart_val(website_data, device_name):
+    sites=website_data.distinct("website", {"device_name":device_name})
+    count=0
+    if "" in sites:
+        sites.remove("")
+    for item in sites:
+        if ".edu" not in item:
+            count+=1
+    total_val=len(sites)
+    values=[total_val-count, total_val]
+    return values
