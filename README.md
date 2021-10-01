@@ -4,12 +4,12 @@ A simple packet sniffing tool written in python, which captures data on a raw so
 This project was made as our S4 Networks Project
 
 ## Dependencies
-argparse
-pwntools
-requests
-flask
-flask_pymongo
-tqdm
++ argparse
++ pwntools
++ requests
++ flask
++ flask_pymongo
++ tqdm
 
 ## Made by:
 - <a href="https://github.com/SkaarFacee">Aditya Anil</a>
